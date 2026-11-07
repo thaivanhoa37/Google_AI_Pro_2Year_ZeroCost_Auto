@@ -192,6 +192,7 @@ async def import_accounts(req: ImportAccountsReq):
 
     lines = [l.strip() for l in req.raw_text.splitlines() if l.strip()]
     added = 0
+    skipped = 0
     for line in lines:
         # Support delimiters: ----, —, |, /, \t, comma, or whitespace
         if "----" in line:
@@ -200,8 +201,9 @@ async def import_accounts(req: ImportAccountsReq):
             parts = [p.strip() for p in line.split("—") if p.strip()]
         elif "|" in line:
             parts = [p.strip() for p in line.split("|") if p.strip()]
-        elif "/" in line and "@" in line and "http://" not in line and "https://" not in line:
-            parts = [p.strip() for p in line.split("/") if p.strip()]
+        elif "/" in line and "@" in line:
+            account_line = re.sub(r"^https?://", "", line, count=1, flags=re.IGNORECASE)
+            parts = [p.strip() for p in account_line.split("/") if p.strip()]
         elif "\t" in line:
             parts = [p.strip() for p in line.split("\t") if p.strip()]
         elif "," in line:
@@ -210,6 +212,7 @@ async def import_accounts(req: ImportAccountsReq):
             parts = [p.strip() for p in re.split(r"\s+", line) if p.strip()]
 
         if len(parts) < 2:
+            skipped += 1
             continue
 
         # Detect if first part is a label (no '@') or email (has '@')
@@ -224,6 +227,7 @@ async def import_accounts(req: ImportAccountsReq):
             password = parts[2]
             rest = parts[3:]
         else:
+            skipped += 1
             continue
 
         recovery_email = ""
@@ -273,8 +277,16 @@ async def import_accounts(req: ImportAccountsReq):
 
     cfg["accounts"] = existing
     save_config(cfg)
-    append_log(f"[{time.strftime('%H:%M:%S')}] [IMPORT] ✅ Đã nhập/cập nhật {added} tài khoản (tổng cộng {len(existing)} tài khoản)")
-    return {"ok": True, "added": added, "total": len(existing)}
+    skipped_message = f", bỏ qua {skipped} dòng không đúng định dạng" if skipped else ""
+    append_log(f"[{time.strftime('%H:%M:%S')}] [IMPORT] ✅ Đã nhập/cập nhật {added} tài khoản (tổng cộng {len(existing)} tài khoản{skipped_message})")
+    return {
+        "ok": True,
+        "message": f"Đã nhập/cập nhật {added} tài khoản"
+        f"{f'; bỏ qua {skipped} dòng không đúng định dạng' if skipped else ''}.",
+        "added": added,
+        "skipped": skipped,
+        "total": len(existing),
+    }
 
 
 @app.post("/api/accounts/delete")
