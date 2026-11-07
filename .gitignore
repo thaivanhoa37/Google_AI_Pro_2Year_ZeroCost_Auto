@@ -1,0 +1,7 @@
+# Local configuration and sensitive runtime data
+config.json
+profiles/
+screenshots/
+__pycache__/
+*.py[cod]
+
