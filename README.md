@@ -13,6 +13,22 @@ Repository GitHub: <https://github.com/worldonlyu/Google_AI_Pro_2Year_ZeroCost_A
 3. Python 3.10 trở lên và đã chọn **Add Python to PATH** khi cài đặt.
 4. Mạng có proxy Mỹ, hoặc nhập mẫu proxy ở bên trái bảng điều khiển.
 
+### Kết nối VPN Mỹ bằng Proton VPN trên realme
+
+1. Mở **Google Play Store** trên điện thoại realme, tìm **Proton VPN** và kiểm tra nhà phát triển là **Proton AG**.
+2. Đăng nhập hoặc tạo tài khoản Proton miễn phí.
+3. Mở danh sách **Countries/Quốc gia**, chọn **United States / Hoa Kỳ** rồi nhấn **Connect/Kết nối**.
+4. Chấp nhận yêu cầu tạo kết nối VPN của Android.
+5. Mở Chrome trên điện thoại và truy cập <https://ipwho.is/>.
+6. Chỉ tiếp tục khi kết quả hiển thị `Country: United States` và `Country code: US`.
+
+Tải Proton VPN từ [Google Play Store](https://play.google.com/store/apps/details?id=ch.protonvpn.android)
+hoặc [trang chính thức](https://protonvpn.com/download-android).
+
+> VPN bật trên điện thoại chỉ đổi IP của điện thoại, không đổi IP cho tool đang chạy trên laptop.
+> Muốn tool dùng IP Mỹ, hãy cài [Proton VPN cho Windows](https://protonvpn.com/download-windows),
+> kết nối United States, kiểm tra IP trên laptop rồi khởi động lại tool.
+
 ## 2. Khởi động nhanh
 
 1. Lần đầu sử dụng, chạy `1_Cai_dat_lan_dau_va_khoi_dong.bat`.
@@ -33,6 +49,8 @@ Repository GitHub: <https://github.com/worldonlyu/Google_AI_Pro_2Year_ZeroCost_A
    - `email----mật khẩu----email khôi phục----khóa 2FA`
    - `email----mật khẩu----khóa 2FA`
 4. Nhấn **Nhập danh sách tài khoản**, sau đó chạy từng tài khoản hoặc chạy hàng loạt.
+
+Có thể xem hướng dẫn nhập chi tiết tại [HUONG_DAN_NHAP_TAI_KHOAN.md](./HUONG_DAN_NHAP_TAI_KHOAN.md).
 
 ## 4. Quy trình tự động
 
