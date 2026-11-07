@@ -245,6 +245,31 @@
       flex: 0 0 auto;
       white-space: nowrap;
     }
+    .single-account-form {
+      border-top: 1px solid var(--border);
+      margin-top: 14px;
+      padding-top: 14px;
+    }
+    .single-account-form h3 {
+      color: #f8fafc;
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+    .single-account-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+    .single-account-grid .full-width {
+      grid-column: 1 / -1;
+    }
+    .single-account-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-top: 9px;
+    }
     .checkbox-row {
       display: flex;
       align-items: center;
@@ -505,6 +530,9 @@
       .card-title button { align-self: stretch; justify-content: center; }
       .terminal { height: 220px; }
       .toast { right: 16px; bottom: 16px; }
+      .single-account-grid { grid-template-columns: 1fr; }
+      .single-account-grid .full-width { grid-column: auto; }
+      .single-account-actions { align-items: stretch; flex-direction: column; }
     }
     @media (max-width: 800px) {
       .form-grid {
@@ -685,6 +713,35 @@
       ></textarea>
       <div style="font-size:12px; color:var(--muted); margin-top:8px;">
         💡 Gợi ý: tài khoản không có 2FA (có email khôi phục) và tài khoản 2FA đều có thể nhập rồi chạy tự động!
+      </div>
+      <div class="single-account-form">
+        <h3>✍️ Hoặc nhập từng phần (không cần nhớ dấu phân cách)</h3>
+        <div class="single-account-grid">
+          <div class="form-group">
+            <label for="singleEmail">Email Google *</label>
+            <input id="singleEmail" type="email" placeholder="user@example.com" autocomplete="off" />
+          </div>
+          <div class="form-group">
+            <label for="singlePassword">Mật khẩu *</label>
+            <input id="singlePassword" type="password" placeholder="Mật khẩu tài khoản" autocomplete="off" />
+          </div>
+          <div class="form-group">
+            <label for="singleRecoveryEmail">Email khôi phục</label>
+            <input id="singleRecoveryEmail" type="email" placeholder="recovery@example.com" autocomplete="off" />
+          </div>
+          <div class="form-group">
+            <label for="singleTotp">Mã bí mật 2FA (TOTP)</label>
+            <input id="singleTotp" type="text" placeholder="Ví dụ: JBSWY3DPEHPK3PXP" autocomplete="off" />
+          </div>
+          <div class="form-group full-width">
+            <label for="singleProxy">Proxy riêng (tùy chọn)</label>
+            <input id="singleProxy" type="text" placeholder="http://user:pass@host:port" autocomplete="off" />
+          </div>
+        </div>
+        <div class="single-account-actions">
+          <span class="muted-text">* Email và mật khẩu là bắt buộc. Mã 2FA là mã bí mật, không phải mã 6 số.</span>
+          <button class="btn-sm btn-success" id="btnAddSingleAccount" onclick="addSingleAccount()">➕ Thêm tài khoản này</button>
+        </div>
       </div>
     </div>
   </div>
@@ -1026,6 +1083,49 @@
         fetchState();
       } else {
         showToast(data.message || 'Không thể nhập danh sách tài khoản.', 'error');
+      }
+    }
+
+    async function addSingleAccount() {
+      const button = document.getElementById('btnAddSingleAccount');
+      const email = document.getElementById('singleEmail').value.trim();
+      const password = document.getElementById('singlePassword').value;
+      const recoveryEmail = document.getElementById('singleRecoveryEmail').value.trim();
+      const totpSecret = document.getElementById('singleTotp').value.replace(/\s+/g, '').trim();
+      const proxy = document.getElementById('singleProxy').value.trim();
+
+      if (!email || !password) {
+        showToast('Hãy nhập email và mật khẩu.', 'error');
+        if (!email) document.getElementById('singleEmail').focus();
+        else document.getElementById('singlePassword').focus();
+        return;
+      }
+
+      button.disabled = true;
+      button.textContent = '⏳ Đang thêm...';
+      try {
+        const res = await fetch('/api/accounts/add', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email,
+            password,
+            recovery_email: recoveryEmail,
+            totp_secret: totpSecret,
+            proxy
+          })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.detail || 'Không thể thêm tài khoản');
+        ['singleEmail', 'singlePassword', 'singleRecoveryEmail', 'singleTotp', 'singleProxy']
+          .forEach(id => { document.getElementById(id).value = ''; });
+        showToast(data.message || 'Đã thêm tài khoản');
+        fetchState();
+      } catch (e) {
+        showToast(e.message || 'Không thể thêm tài khoản.', 'error');
+      } finally {
+        button.disabled = false;
+        button.textContent = '➕ Thêm tài khoản này';
       }
     }
 

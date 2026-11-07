@@ -71,6 +71,14 @@ class ImportAccountsReq(BaseModel):
     raw_text: str
 
 
+class AddAccountReq(BaseModel):
+    email: str
+    password: str
+    recovery_email: str = ""
+    totp_secret: str = ""
+    proxy: str = ""
+
+
 class RunSingleReq(BaseModel):
     account_id: str
     start_step: int = 1
@@ -287,6 +295,65 @@ async def import_accounts(req: ImportAccountsReq):
         "skipped": skipped,
         "total": len(existing),
     }
+
+
+@app.post("/api/accounts/add")
+async def add_account(req: AddAccountReq):
+    email = req.email.strip()
+    password = req.password.strip()
+    recovery_email = req.recovery_email.strip()
+    totp_secret = req.totp_secret.replace(" ", "").strip()
+    proxy = req.proxy.strip()
+
+    if "@" not in email or not password:
+        raise HTTPException(status_code=400, detail="Email và mật khẩu là bắt buộc")
+    if recovery_email and "@" not in recovery_email:
+        raise HTTPException(status_code=400, detail="Email khôi phục không hợp lệ")
+    if totp_secret and (len(totp_secret) < 16 or not re.fullmatch(r"[A-Za-z2-7]+=*", totp_secret)):
+        raise HTTPException(status_code=400, detail="Mã 2FA phải là mã bí mật TOTP Base32 hợp lệ")
+
+    cfg = load_config()
+    accounts = cfg.get("accounts", [])
+    normalized_email = email.lower().replace(".", "")
+    existing = next(
+        (account for account in accounts if account["email"].lower().replace(".", "") == normalized_email),
+        None,
+    )
+    if existing:
+        existing.update(
+            {
+                "password": password,
+                "recovery_email": recovery_email,
+                "totp_secret": totp_secret,
+                "proxy": proxy,
+            }
+        )
+        action = "cập nhật"
+        account_id = existing["id"]
+    else:
+        account_id = f"Account_{len(accounts) + 1}"
+        accounts.append(
+            {
+                "id": account_id,
+                "email": email,
+                "password": password,
+                "recovery_email": recovery_email,
+                "totp_secret": totp_secret,
+                "proxy": proxy,
+                "ip_info": "",
+                "status": "pending",
+                "current_step": 0,
+                "step_message": "Tài khoản mới nhập (chờ chạy)",
+                "expiry_date": "-",
+                "last_screenshot": "",
+            }
+        )
+        action = "thêm"
+
+    cfg["accounts"] = accounts
+    save_config(cfg)
+    append_log(f"[{time.strftime('%H:%M:%S')}] [IMPORT] ✅ Đã {action} tài khoản {email}")
+    return {"ok": True, "message": f"Đã {action} tài khoản {email}", "account_id": account_id}
 
 
 @app.post("/api/accounts/delete")
