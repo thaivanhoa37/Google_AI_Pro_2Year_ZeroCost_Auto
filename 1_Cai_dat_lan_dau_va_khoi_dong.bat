@@ -30,14 +30,18 @@ if errorlevel 1 (
 
 echo.
 echo ======================================================================
-echo   Cai trinh duyet Playwright Chromium...
+echo   Kiem tra Google Chrome...
 echo ======================================================================
-py -3.10 -m playwright install chromium
-if errorlevel 1 (
-    echo [LOI] Khong the cai Chromium cho Playwright.
+if exist "%ProgramFiles%\Google\Chrome\Application\chrome.exe" goto chrome_found
+if exist "%ProgramFiles(x86)%\Google\Chrome\Application\chrome.exe" goto chrome_found
+if exist "%LOCALAPPDATA%\Google\Chrome\Application\chrome.exe" goto chrome_found
+echo [LOI] Khong tim thay Google Chrome tren may.
+echo Hay cai Google Chrome tu https://www.google.com/chrome/ roi chay lai file nay.
     pause
     exit /b 1
-)
+
+:chrome_found
+echo   Da tim thay Google Chrome. Ung dung se su dung Chrome, khong phai Chromium.
 
 echo.
 echo ======================================================================
