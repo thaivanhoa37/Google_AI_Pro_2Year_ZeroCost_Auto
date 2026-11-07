@@ -1,50 +1,43 @@
-========================================================================  
-  Google AI Pro (5 TB) 零成本两年 (US$0.00 -> 24个月) 全自动控制台  
-========================================================================  
-  
+# Google AI Pro (5 TB) - Bảng điều khiển tự động hóa 2 năm 0 đồng
 
-声明：该项目并非本人开发，仅作为圈内开源供大家分析学习使用  
-Disclaimer: I did not develop this project; it is provided as an open-source resource for the community to analyze and learn from.  
+> Tuyên bố: Đây không phải dự án do tôi phát triển. Dự án được cung cấp dưới dạng mã nguồn mở để cộng đồng phân tích và học tập.
 
-【一、运行环境要求】
-1. Windows 10 / 11 系统
-2. 已安装 Google Chrome 浏览器（默认路径即可）
-3. 已安装 Python 3.10 或更高版本（安装时勾选 Add Python to PATH）
-4. 网络环境：本机开启美区（US）代理，或在控制台左侧填写代理模板
+## Mã nguồn
 
-【二、快速启动步骤】
-1. 首次使用请双击运行：【1_首次运行_安装依赖并启动.bat】
-2. 之后日常使用直接双击：【2_启动控制台.bat】
-3. 浏览器会自动打开控制台页面：http://127.0.0.1:8765
+Repository GitHub: <https://github.com/worldonlyu/Google_AI_Pro_2Year_ZeroCost_Auto>
 
-【三、自定义填写支付卡 & 跑号说明】
-1. 填写支付卡（必填）：
-   - 在网页左侧【全局配置与内联免税绑卡】区域，填入你自己的 Visa 或 Mastercard 外币卡：
-     * 卡号（16位数字）
-     * 有效期（月 / 年，如 08 / 29）
-     * 安全码（3位 CVC）
-     * 持卡人英文姓名
-     * 免税邮编默认已填好 97201（美国俄勒冈免税州），无需修改
-   - 填写后点击【💾 保存配置】。
-   - 注：脚本内置严格 0 元消费保护，仅在结账弹窗确认为 US$0.00 时才会点击订阅，全程 0 扣费。
+## 1. Yêu cầu môi trường
 
-2. 批量导入 Google 账号：
-   - 在网页右侧【批量放号导入区】粘贴账号（每行一个），支持以下任意格式：
-     * 邮箱----密码----辅助邮箱
-     * 邮箱----密码----辅助邮箱----2FA密钥
-     * 邮箱----密码----2FA密钥
-   - 点击【➕ 一键导入账号列表】。
+1. Windows 10 / 11.
+2. Đã cài Google Chrome (đường dẫn mặc định).
+3. Python 3.10 trở lên và đã chọn **Add Python to PATH** khi cài đặt.
+4. Mạng có proxy Mỹ, hoặc nhập mẫu proxy ở bên trái bảng điều khiển.
 
-3. 开始全自动执行：
-   - 点击单个账号右侧的【▶ 执行】或顶部的【▶ 批量全自动执行】。
-   - 脚本会自动完成：
-     Step 1: 自动登录 Google 并通过辅助邮箱 / 2FA 验证
-     Step 2: 内联免税绑卡 + 首层 12 个月免费包 (US$0.00)
-     Step 3: 叠加二层 6 个月免费包 (US$0.00 -> 18个月)
-     Step 4: 叠加三层 6 个月免费包 (US$0.00 -> 24个月封顶)
-     Step 5: 自动前往 Google Play 取消自动续订，锁死 2 年到期权益并截图验真
+## 2. Khởi động nhanh
 
+1. Lần đầu sử dụng, chạy `1_Cai_dat_lan_dau_va_khoi_dong.bat`.
+2. Các lần sau, chạy `2_Khoi_dong_bang_dieu_khien.bat`.
+3. Trình duyệt sẽ mở bảng điều khiển tại <http://127.0.0.1:8765>.
 
-# 卡网：https://faka.cdkey.si
-# 博客：https://blog.caowo.de
-# TG群：@Hello_Florence
+## 3. Cấu hình thẻ và chạy tài khoản
+
+1. Trong khu vực cấu hình, nhập thẻ Visa hoặc Mastercard quốc tế:
+   - Số thẻ 16 chữ số.
+   - Tháng / năm hết hạn.
+   - Mã CVC 3 chữ số.
+   - Tên chủ thẻ bằng tiếng Anh.
+   - Mã miễn thuế mặc định `97201` (Oregon), không cần đổi.
+2. Nhấn **Lưu cấu hình**. Hệ thống có bảo vệ 0 đồng và chỉ tiếp tục khi cửa sổ thanh toán xác nhận `US$0.00`.
+3. Nhập tài khoản, mỗi dòng một tài khoản. Có thể dùng:
+   - `email----mật khẩu----email khôi phục`
+   - `email----mật khẩu----email khôi phục----khóa 2FA`
+   - `email----mật khẩu----khóa 2FA`
+4. Nhấn **Nhập danh sách tài khoản**, sau đó chạy từng tài khoản hoặc chạy hàng loạt.
+
+## 4. Quy trình tự động
+
+- **Bước 1:** Đăng nhập Google và xử lý email khôi phục / 2FA.
+- **Bước 2:** Liên kết thẻ và kích hoạt lớp miễn phí 12 tháng.
+- **Bước 3:** Cộng thêm lớp miễn phí 6 tháng.
+- **Bước 4:** Cộng thêm lớp miễn phí 6 tháng, đủ 24 tháng.
+- **Bước 5:** Hủy gia hạn tự động trên Google Play và lưu ảnh xác minh.
