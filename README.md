@@ -4,55 +4,74 @@
 
 ## Mã nguồn
 
-Repository GitHub: <https://github.com/worldonlyu/Google_AI_Pro_2Year_ZeroCost_Auto>
+Repository GitHub: <https://github.com/thaivanhoa37/Google_AI_Pro_2Year_ZeroCost_Auto>
 
 ## 1. Yêu cầu môi trường
 
 1. Windows 10 / 11.
-2. Đã cài Google Chrome (đường dẫn mặc định).
-3. Python 3.10 trở lên và đã chọn **Add Python to PATH** khi cài đặt.
-4. Mạng có proxy Mỹ, hoặc nhập mẫu proxy ở bên trái bảng điều khiển.
+2. Đã cài Google Chrome theo đường dẫn mặc định.
+3. Python 3.10 trở lên. Trên Windows có thể kiểm tra bằng `py -3.10 --version`.
+4. Kết nối Internet ổn định.
+5. Nếu cần IP Mỹ, cài và kết nối Proton VPN trên **chính laptop chạy tool**.
 
-### Kết nối VPN Mỹ bằng Proton VPN trên realme
+## 2. Cài Proton VPN và chuyển sang máy chủ Mỹ
 
-1. Mở **Google Play Store** trên điện thoại realme, tìm **Proton VPN** và kiểm tra nhà phát triển là **Proton AG**.
-2. Đăng nhập hoặc tạo tài khoản Proton miễn phí.
-3. Mở danh sách **Countries/Quốc gia**, chọn **United States / Hoa Kỳ** rồi nhấn **Connect/Kết nối**.
-4. Chấp nhận yêu cầu tạo kết nối VPN của Android.
-5. Mở Chrome trên điện thoại và truy cập <https://ipwho.is/>.
+Proton VPN có gói miễn phí, nhưng máy chủ và khả năng chọn vị trí có thể thay đổi
+theo chính sách của Proton. Tải ứng dụng Windows từ trang chính thức:
+
+<https://protonvpn.com/download-windows>
+
+Các bước cài đặt:
+
+1. Tải Proton VPN cho Windows và cài đặt.
+2. Mở Proton VPN, đăng nhập hoặc tạo tài khoản.
+3. Trong danh sách quốc gia, chọn **United States / Hoa Kỳ**.
+4. Chọn máy chủ có nhãn **Free** nếu dùng gói miễn phí, rồi nhấn **Connect**.
+5. Mở trình duyệt trên laptop và truy cập <https://ipwho.is/>.
 6. Chỉ tiếp tục khi kết quả hiển thị `Country: United States` và `Country code: US`.
+7. Đóng các cửa sổ Chrome đang mở rồi chạy tool.
 
-Tải Proton VPN từ [Google Play Store](https://play.google.com/store/apps/details?id=ch.protonvpn.android)
-hoặc [trang chính thức](https://protonvpn.com/download-android).
+> Bật Proton VPN trên điện thoại realme chỉ đổi IP của điện thoại, không đổi IP
+> cho tool chạy trên laptop. Nếu muốn tool dùng IP Mỹ, Proton VPN phải được cài
+> và kết nối trực tiếp trên laptop. Khi dùng VPN hệ thống, để trống ô **Mẫu proxy
+> toàn cục** trong bảng điều khiển.
 
-> VPN bật trên điện thoại chỉ đổi IP của điện thoại, không đổi IP cho tool đang chạy trên laptop.
-> Muốn tool dùng IP Mỹ, hãy cài [Proton VPN cho Windows](https://protonvpn.com/download-windows),
-> kết nối United States, kiểm tra IP trên laptop rồi khởi động lại tool.
-
-## 2. Khởi động nhanh
+## 3. Khởi động nhanh
 
 1. Lần đầu sử dụng, chạy `1_Cai_dat_lan_dau_va_khoi_dong.bat`.
+   - Script cài dependency từ PyPI chính thức.
+   - Script kiểm tra Google Chrome.
 2. Các lần sau, chạy `2_Khoi_dong_bang_dieu_khien.bat`.
 3. Trình duyệt sẽ mở bảng điều khiển tại <http://127.0.0.1:8765>.
 
-## 3. Cấu hình thẻ và chạy tài khoản
+Nếu lệnh `python` không hoạt động, dùng Python Launcher:
 
-1. Trong khu vực cấu hình, nhập thẻ Visa hoặc Mastercard quốc tế:
+```powershell
+py -3.10 --version
+py -3.10 app.py
+```
+
+## 4. Nhập tài khoản và cấu hình
+
+1. Nhập tài khoản bằng form **Nhập từng phần**, hoặc dán danh sách theo định dạng:
+   - `email----mật khẩu----email khôi phục`
+   - `email----mật khẩu----email khôi phục----khóa 2FA`
+   - `email----mật khẩu----khóa 2FA`
+2. Không thêm `http://` hoặc `https://` trước email.
+3. Trong khu vực cấu hình, nhập thẻ Visa hoặc Mastercard quốc tế:
    - Số thẻ 16 chữ số.
    - Tháng / năm hết hạn.
    - Mã CVC 3 chữ số.
    - Tên chủ thẻ bằng tiếng Anh.
    - Mã miễn thuế mặc định `97201` (Oregon), không cần đổi.
-2. Nhấn **Lưu cấu hình**. Hệ thống có bảo vệ 0 đồng và chỉ tiếp tục khi cửa sổ thanh toán xác nhận `US$0.00`.
-3. Nhập tài khoản, mỗi dòng một tài khoản. Có thể dùng:
-   - `email----mật khẩu----email khôi phục`
-   - `email----mật khẩu----email khôi phục----khóa 2FA`
-   - `email----mật khẩu----khóa 2FA`
-4. Nhấn **Nhập danh sách tài khoản**, sau đó chạy từng tài khoản hoặc chạy hàng loạt.
+4. Nhấn **Lưu cấu hình**.
+5. Kiểm tra IP hiển thị trong bảng tài khoản trước khi chạy.
+6. Nhấn **Nhập danh sách tài khoản**, sau đó chạy từng tài khoản hoặc chạy hàng loạt.
 
-Có thể xem hướng dẫn nhập chi tiết tại [HUONG_DAN_NHAP_TAI_KHOAN.md](./HUONG_DAN_NHAP_TAI_KHOAN.md).
+> Không commit hoặc chia sẻ `config.json`, thư mục `profiles/`, thư mục
+> `screenshots/`, mật khẩu, mã 2FA hoặc thông tin thẻ lên GitHub.
 
-## 4. Quy trình tự động
+## 5. Quy trình tự động
 
 - **Bước 1:** Đăng nhập Google và xử lý email khôi phục / 2FA.
 - **Bước 2:** Liên kết thẻ và kích hoạt lớp miễn phí 12 tháng.
