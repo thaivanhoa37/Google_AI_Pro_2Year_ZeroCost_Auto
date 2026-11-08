@@ -11,13 +11,33 @@ Repository GitHub: <https://github.com/worldonlyu/Google_AI_Pro_2Year_ZeroCost_A
 1. Windows 10 / 11.
 2. Đã cài Google Chrome (đường dẫn mặc định).
 3. Python 3.10 trở lên và đã chọn **Add Python to PATH** khi cài đặt.
-4. Mạng có proxy Mỹ, hoặc nhập mẫu proxy ở bên trái bảng điều khiển.
+4. Mạng có proxy Mỹ, hoặc kết nối Proton VPN đến quốc gia phù hợp trước khi chạy.
 
 ## 2. Khởi động nhanh
 
 1. Lần đầu sử dụng, chạy `1_Cai_dat_lan_dau_va_khoi_dong.bat`.
 2. Các lần sau, chạy `2_Khoi_dong_bang_dieu_khien.bat`.
 3. Bảng điều khiển sẽ mở tại <http://127.0.0.1:8765>.
+
+### Đổi IP bằng Proton VPN
+
+Proton VPN là VPN cấp cho toàn bộ máy tính, nên không cần nhập proxy vào bảng
+điều khiển. Chỉ sử dụng tài khoản Proton VPN của bạn và tuân thủ điều khoản của
+Proton VPN, Google cùng pháp luật hiện hành.
+
+1. Tải Proton VPN chính thức tại <https://protonvpn.com/download>.
+2. Cài đặt Proton VPN cho Windows và đăng nhập tài khoản của bạn.
+3. Chọn một máy chủ ở quốc gia cần sử dụng rồi nhấn **Connect**. Gói miễn phí
+   có thể giới hạn quốc gia/máy chủ và thay đổi theo chính sách của Proton VPN.
+4. Kiểm tra IP và quốc gia tại <https://ip.me/> hoặc dùng nút kiểm tra proxy
+   trong bảng điều khiển.
+5. Giữ VPN kết nối trong suốt quá trình chạy. Nếu muốn dùng proxy riêng cho
+   từng tài khoản, hãy nhập mẫu proxy ở bảng điều khiển; proxy riêng sẽ được ưu
+   tiên hơn kết nối mạng mặc định.
+
+Không lưu mật khẩu Proton VPN, mã xác thực hoặc thông tin nhạy cảm vào
+`config.json` hay repository. Nếu kết nối VPN bị ngắt, hãy dừng quy trình và
+kết nối lại trước khi chạy tiếp.
 
 
 ## 3. Cấu hình thẻ và chạy tài khoản
